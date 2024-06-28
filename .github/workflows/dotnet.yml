@@ -6,8 +6,8 @@ name: .NET
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # pull_request:
+  #  branches: [ "main" ]
 
 jobs:
   build:
@@ -16,6 +16,7 @@ jobs:
     runs-on: windows-2022
     env:
       Debug_Build_Path: bin/Debug/net8.0/
+      Release_Build_Path: bin/Release/net8.0/win-x64/publish/
 
     steps:
     - uses: actions/checkout@v4
@@ -32,8 +33,13 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Release Build
       run: dotnet publish
-    - name: Upload build artifacts
+    - name: Upload build artifacts1
       uses: actions/upload-artifact@v4
       with:
-        name: exeup
+        name: debugBuild
         path: ${{ env.Debug_Build_Path }}
+    - name: Upload build artifacts2
+      uses: actions/upload-artifact@v4
+      with:
+        name: releaseBuild
+        path: ${{ env.Release_Build_Path }}
