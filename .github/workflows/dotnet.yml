@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: exeup
-        path: bin/Debug/net8.0/
+        path: ${{ env.Wap_Project_Path }}
