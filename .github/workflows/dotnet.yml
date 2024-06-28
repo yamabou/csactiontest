@@ -15,7 +15,7 @@ jobs:
     # runs-on: ubuntu-latest
     runs-on: windows-2022
     env:
-      Wap_Project_Path: bin/Debug/net8.0/
+      Debug_Build_Path: bin/Debug/net8.0/
 
     steps:
     - uses: actions/checkout@v4
@@ -26,12 +26,14 @@ jobs:
         # cache: true
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
+    - name: Debug Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Release Build
+      run: dotnet publish
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: exeup
-        path: ${{ env.Wap_Project_Path }}
+        path: ${{ env.Debug_Build_Path }}
